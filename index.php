@@ -1,6 +1,6 @@
 <html>
   <body>
-    <h1>My Bakery</h1>
+    <h1>Pocket Rabbi</h1>
 <?php
 
 ini_set( 'error_reporting', E_ALL );
