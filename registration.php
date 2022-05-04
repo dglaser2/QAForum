@@ -39,7 +39,7 @@
         if ($result) {
             echo "
                   Congrats for becoming a pocket rabbi member"!;
-        } else {
+        } else {        // else
             echo "Required fields are missing.";
          }
         CloseCon($con);
