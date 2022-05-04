@@ -18,34 +18,29 @@
     <?php
         $con = OpenCon();
         if (isset($_REQUEST['username'])) {
+            
         //$fname    = stripslashes($_REQUEST['fname']);
-        $fname    = $_REQUEST['fname'];
-        // //$lname    = stripslashes($_REQUEST['lname']);
+         $fname    = $_REQUEST['fname'];
+        // // //$lname    = stripslashes($_REQUEST['lname']);
         $lname    = $_REQUEST['lname'];
-        // // removes backslashes
-        // // $username = stripslashes($_REQUEST[$_REQUEST['fname']]);
-        // //escapes special characters in a string
-        $username = $_REQUEST['username'];
-        // //$email    = stripslashes($_REQUEST['email']);
-        $email    = $_REQUEST['email'];
-        // //$password = stripslashes($_REQUEST['password']);
-        $password = $con, $_REQUEST['password'];
-        // //$firstname = date("Y-m-d H:i:s");
-        // echo "$fname $lname's info:
-        //         $username, $email, $password";
-        // $query    = "INSERT into Users (username, email, pw, fname, lname)
-        //              VALUES ('$username', '$email','$password', '$fname', '$lname')";
-        // $result   = $conn->query($query);
-        // if ($result) {
-        //     echo "<div class='form'>
-        //           <h3>You are registered successfully.</h3><br/>
-                 
-        //           </div>";
-        // } else {
-        //     echo "<div class='form'>
-        //           <h3>Required fields are missing.</h3><br/>
-        //           <p class='link'>Click here to <a href='registration.php'>registration</a> again.</p>
-        //           </div>";
+        // // // removes backslashes
+        // // // $username = stripslashes($_REQUEST[$_REQUEST['fname']]);
+        // // //escapes special characters in a string
+         $username = $_REQUEST['username'];
+        // // //$email    = stripslashes($_REQUEST['email']);
+         $email    = $_REQUEST['email'];
+        // // //$password = stripslashes($_REQUEST['password']);
+         $password = $_REQUEST['password'];
+        echo "$fname $lname's info:
+                $username, $email, $password";
+        $query    = "INSERT into Users (username, email, pw, fname, lname)
+                     VALUES ('$username', '$email','$password', '$fname', '$lname')";
+        $result   = $con->query($query);
+        if ($result) {
+            echo "
+                  Congrats for becoming a pocket rabbi member"!;
+        } else {
+            echo "Required fields are missing.";
          }
         CloseCon($con);
     ?>
@@ -61,3 +56,4 @@
     </form>
 </body>
 </html>
+
