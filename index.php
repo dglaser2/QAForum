@@ -10,15 +10,15 @@ include 'dbconnect.php';
 
 ?>
 
-<form action="searchcust.php">
+<!-- <form action="searchcust.php">
     Customer ID:<br>
   <input type="text" name="custid"><br>
   <input type="submit" value="Search">
-</form>
+</form> -->
 
 <?php
 
-$mysqli->close();
+// $mysqli->close();
 ?>
 
 

@@ -30,19 +30,33 @@
         // // //$email    = stripslashes($_REQUEST['email']);
          $email    = $_REQUEST['email'];
         // // //$password = stripslashes($_REQUEST['password']);
-         $password = $_REQUEST['password'];
-        echo "$fname $lname's info:
-                $username, $email, $password";
-        $query    = "INSERT into Users (username, email, pw, fname, lname)
+        $password = $_REQUEST['password'];
+        $user_check_query = "SELECT * FROM Users WHERE username= '$username' OR email= '$email' LIMIT 1";
+        
+        //$result1->free();
+        if($result1 = $con->query($user_check_query)){
+            $user = $result1->fetch_assoc();
+            if ($user['username'] === $username) {
+                echo "username already exists. Please try another";
+            }
+            if($user['email']=== $email){
+                echo "This email is already registed. Please try logging in
+                or using a different email address.";
+            }
+        }
+        else{
+            $query    = "INSERT into Users (username, email, pw, fname, lname)
                      VALUES ('$username', '$email','$password', '$fname', '$lname')";
-        $result   = $con->query($query);
-        if ($result) {
-            echo "
-                  Congrats for becoming a pocket rabbi member"!;
-        } else {        // else
-            echo "Required fields are missing.";
-         }
+            if ($result = $con->query($query)) {
+                echo "Congrats for becoming a pocket rabbi member!";
+            }
+            else {
+                echo "Required fields are missing.";
+            }
+           }
+        }
         CloseCon($con);
+
     ?>
     <form class="form" action="" method="POST">
         <h2 class="login-title">Registration</h2>
@@ -56,4 +70,3 @@
     </form>
 </body>
 </html>
-
