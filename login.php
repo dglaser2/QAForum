@@ -1,5 +1,6 @@
 <?php
     include "dbconnect.php";
+    session_start();
 ?>
 
 <!DOCTYPE html>
@@ -14,7 +15,6 @@
 
 <?php
 // Initialize session
-session_start();
 
 // Check if user is already logged in. If so, take to profile page
 // if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
@@ -48,9 +48,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         //     echo $con->connect_error;
         // } else { echo "connection okay";}
         // Prepare select statement
-        $sql = "SELECT uid, username, pw FROM Users WHERE username = ?";
+        $query = "SELECT uid, username, pw FROM Users WHERE username = ?";
         
-        if($stmt = $con->prepare($sql)) {
+        if($stmt = $con->prepare($query)) {
             // Bind variables to the prepared statement as parameters
             $stmt->bind_param("s", $param_username);
             
@@ -74,7 +74,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                             // Store data in session variables
                             $_SESSION["loggedin"] = true;
                             $_SESSION["uid"] = $uid;
-                            $_SESSION["username"] = $username;                            
+                            $_SESSION["username"] = $username;                           
                             
                             // Redirect user to welcome page
                             header("location: profile.php");
@@ -98,7 +98,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     
     // Close connection
-    CloseCon($conn);
+    CloseCon($con);
 }
 ?>
  
