@@ -18,68 +18,89 @@
 $con = OpenCon();
 
 // AUTHENTICATE
-// if (isset($_SESSION["uid"])) {
-//
-//} else { go to login page}
+if (isset($_SESSION["uid"])) {
+    
+    // Get user data
+    $query = "SELECT username, fname, lname, city, country, bio, certified, sect, reputation
+     FROM `Users` 
+     WHERE uid = ?";
+    $stmt = $con->prepare($query);
+    $stmt->bind_param("i", $_SESSION["uid"]);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    foreach($result as $row) {
+        extract($row);
+    }
 
-echo "<h1>". $_SESSION["username"] . "'s Profile</h1>";
+    // PROFILE HEADER
+    echo "<h1>". $fname . " " . $lname . "'s Profile</h1>";
+    echo "@".$username . " - ";
+    echo $city . ", " . $country . " - ";
+    echo $sect . " - ";
+    echo $reputation;
+    echo "<p><i>" . $bio . "</i></p>";
 
-// MY QUESTIONS
-echo "<h2>My Questions</h2>";
+    // MY QUESTIONS
+    echo "<h2>My Questions:</h2>";
 
-$query = "SELECT * FROM `Questions` WHERE uid = ? ORDER BY qdate DESC";
+    // Get question data
+    $query = "SELECT * FROM `Questions` WHERE uid = ? ORDER BY qdate DESC";
+    $stmt = $con->prepare($query);
+    $stmt->bind_param("i", $_SESSION["uid"]);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-$stmt = $con->prepare($query);
-$stmt->bind_param("i", $_SESSION["uid"]);
+    // Print question data
+    foreach($result as $row) {
+        extract($row);
+        echo "<item>
+        <h4>$title</h4>
+        <description>$body</description>
+        <p>$qdate</p>
+        </item>"; 
+    } 
 
-$stmt->execute();
+    // MY ANSWERS
+    echo "<h2>My Answers:</h2>";
 
-// mysqli_stmt_store_result($stmt);
-$result = $stmt->get_result();
-// if(mysqli_stmt_num_rows($stmt) > 0) {
-//     // echo 'got it';
-//     mysqli_stmt_bind_result($stmt, $qid, $uid, $title, $body, $topid, $qdate, $resolved);
-//     mysqli_stmt_fetch($stmt);
-// }
+    // Get answers data
+    $query = "SELECT questions.title as q, answers.body as a, qdate
+    FROM `Answers` join `Questions` using (qid) 
+    WHERE answers.uid = ? ORDER BY adate DESC";
+    $stmt = $con->prepare($query);
+    $stmt->bind_param("i", $_SESSION["uid"]);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-foreach($result as $row) {
+    // Print answers data
+    foreach($result as $row) {
+        extract($row);
+        echo "<item>
+        <h4>$q</h4>
+        <description>$a</description>
+        <p>$qdate</p>
+        </item>"; 
+    }
 
-    extract($row);
+    ?>
 
-    echo "<item>
-    <h4>$title</h4>
-    <description>$body</description>
-    </item>"; 
-} 
+<!DOCTYPE html>
+<html>
+<body>
 
-// MY ANSWERS
-echo "<h2>My Answers</h2>";
+</br></br></br></br></br></br>
+<footer>
+  <a href="logout.php">Logout</a></p>
+</footer>
+</body>
+</html>
 
-$query = "SELECT questions.title as q, answers.body as a  
-FROM `Answers` join `Questions` using (qid) 
-WHERE answers.uid = ? ORDER BY adate DESC";
+<?php
 
-$stmt = $con->prepare($query);
-$stmt->bind_param("i", $_SESSION["uid"]);
-
-$stmt->execute();
-
-// mysqli_stmt_store_result($stmt);
-$result = $stmt->get_result();
-// if(mysqli_stmt_num_rows($stmt) > 0) {
-//     // echo 'got it';
-//     mysqli_stmt_bind_result($stmt, $qid, $uid, $title, $body, $topid, $qdate, $resolved);
-//     mysqli_stmt_fetch($stmt);
-// }
-
-foreach($result as $row) {
-
-    extract($row);
-
-    echo "<item>
-    <h4>$q</h4>
-    <description>$a</description>
-    </item>"; 
-} 
+} else {
+    // Redirect user to welcome page
+    header("location: logout.php");
+    // error: please login to view!
+}
 
 ?>
