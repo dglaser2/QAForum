@@ -77,5 +77,5 @@ if (isset($_SESSION["uid"])) {
     header("location: logout.php");
     // error: please login to view!
 }
-
+CloseCon($con);
 ?>

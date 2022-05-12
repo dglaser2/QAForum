@@ -19,17 +19,10 @@
         $con = OpenCon();
         if (isset($_REQUEST['username'])) {
             
-        //$fname    = stripslashes($_REQUEST['fname']);
          $fname    = $_REQUEST['fname'];
-        // // //$lname    = stripslashes($_REQUEST['lname']);
         $lname    = $_REQUEST['lname'];
-        // // // removes backslashes
-        // // // $username = stripslashes($_REQUEST[$_REQUEST['fname']]);
-        // // //escapes special characters in a string
          $username = $_REQUEST['username'];
-        // // //$email    = stripslashes($_REQUEST['email']);
          $email    = $_REQUEST['email'];
-        // // //$password = stripslashes($_REQUEST['password']);
         $password = $_REQUEST['password'];
         $user_check_query = "SELECT * FROM Users WHERE username= '$username' OR email= '$email' LIMIT 1";
         
