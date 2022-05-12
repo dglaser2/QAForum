@@ -31,7 +31,7 @@
             $query = "INSERT into Questions (uid, title ,body, qdate)
             VALUES ('$uid', '$title', '$body','$qdate')";
             if ($result = $con->query($query)) {
-                echo "Question posted!";
+                echo '<script>console.log("Question posted!"); </script>';
                 unset($_REQUEST);
             }  else {
                 echo "Error posting question";
