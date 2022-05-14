@@ -1,14 +1,18 @@
 <?php
 
-$host = "localhost";
-$username = "root";
-$password = "";
-$db = "prabbi";
+function OpenCon() {
+    $db = "localhost";
+    $dbuser = "root";
+    $dbpass = "";
+    $dbhost = "prabbi";
+    $conn = new mysqli($db, $dbuser, $dbpass,$dbhost) or die("Connect failed: %s\n". $conn -> error);
+     
+    return $conn;
+}
 
-$mysqli = new mysqli($host, $username, $password, $db);
 
-/* check connection */
-// if ($mysqli->connect_errno) {
-//     printf("Connect failed: %s\n", $mysqli->connect_error);
-//     exit();
-// }
+function CloseCon($conn)
+{
+$conn -> close();
+}
+?>
