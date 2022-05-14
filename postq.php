@@ -1,4 +1,5 @@
 <?php
+    include 'header.php';  
     include "dbconnect.php";
     session_start();
     unset($_REQUEST);
@@ -8,14 +9,43 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Registration</title>
+    <title>Post Question</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body{ font: 14px sans-serif; }
+        .wrapper{ width: 800px; padding: 20px; }
+    </style>
 </head>
 <body>
-    <h1>
-        Ask a question:
-    </h1>
+<div class="pl-4 pt-4">
+    <h1> Ask a Question </h1>
+
+<?php 
+        if(!empty($post_err)){
+            echo '<div class="alert alert-danger">' . $post_err . '</div>';
+        }        
+?>
+
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+    </br>  </br></br>
+        <div class="form-group">
+                <label>Title</label>
+                <input type="text" name="title" class="form-control" placeholder="What's the shpiel?" required>
+                <span class="invalid-feedback"><?php echo $username_err; ?></span>
+            </div>    
+            <div class="form-outline">
+            <label class="form-label">Body</label>
+             <textarea class="form-control" name="body" rows="10" height="80" placeholder="Be specific..."></textarea>
+            </div>
+    </br>
+            <div class="form-group">
+                <input type="submit" value="Post" class="btn btn-primary" name="submit" >
+            </div>
+        </form>
+    </form>
+    </div>
+</body>
+</html>
 
 <?php
     $con = OpenCon();
@@ -47,13 +77,6 @@
         CloseCon($con);
 
 ?>
-    <form class="form" action="" method="POST">
-        <h2>Title</h2>
-        <input type="text" class="login-input" name="title" required />
-        <h2>Body</h2>
-        <textarea id="body" name="body" rows="8" cols="80" required></textarea>
-</br>
-        <input type="submit" name="submit" value="Post" class="login-button">
-    </form>
+
 </body>
 </html>

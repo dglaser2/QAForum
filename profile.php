@@ -8,16 +8,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>Profile</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body{ font: 14px sans-serif; }
-        .wrapper{ width: 360px; padding: 20px; }
+        .wrapper{ width: 800px; padding: 20px; }
     </style>
 </head>
 <body>
-</body>
-</html>
+<div class="p-4">
 
 <?php
 
@@ -25,31 +24,37 @@ $con = OpenCon();
 
 // AUTHENTICATE
 if (isset($_SESSION["uid"])) {
+
+    if (isset($_GET['u'])) {
+        $currID = $_GET['u'];
+    } else {
+        $currID = $_SESSION["uid"];
+    }
     
     // Get user data
     $query = "SELECT username, fname, lname, city, country, bio, certified, sect, reputation
      FROM `Users` 
      WHERE uid = ?";
     $stmt = $con->prepare($query);
-    $stmt->bind_param("i", $_SESSION["uid"]);
+    $stmt->bind_param("i", $currID);
     $stmt->execute();
     $result = $stmt->get_result();
     foreach($result as $row) {
         extract($row);
     }
 
-    // PROFILE HEADER
-    echo "<h1>". $fname . " " . $lname . "'s Profile</h1>";
+    // HEADER
+    echo "<h1>". $fname . " " . $lname . "</h1>";
     echo "@".$username . " - ";
     echo $city . ", " . $country . " - ";
     echo $sect . " - ";
     echo $reputation;
-    echo "<p><i>" . $bio . "</i></p>";
+    echo "</br></br><p><i>" . $bio . "</i></p>";
 
-    // MY QUESTIONS
-    echo "<h2>My Questions:</h2>";
+    // QUESTIONS
+    echo "</br><h4 style='font-weight: semibold;'>Questions:</h4>";
 
-    // Get question data
+    // Get questions data
     $query = "SELECT * FROM `Questions` WHERE uid = ? ORDER BY qdate DESC";
     $stmt = $con->prepare($query);
     $stmt->bind_param("i", $_SESSION["uid"]);
@@ -59,15 +64,32 @@ if (isset($_SESSION["uid"])) {
     // Print question data
     foreach($result as $row) {
         extract($row);
-        echo "<item>
-        <h4>$title</h4>
-        <description>$body</description>
-        <p>$qdate</p>
-        </item>"; 
+        echo "
+        <div>
+        <table class='table table-hover'>
+            <td>
+            <strong>
+                $title
+            </strong>
+            </br>
+            <a href=profile.php?u=".$uid.">@".$username."</a>
+            </br></br>
+            <blockquote>
+                $body
+            </blockquote>
+
+            <div class='d-flex mt-1 justify-content-end'>
+                <p style='font-weight:bold;'>$qdate</p> 
+                <div class='pl-5'><a href='question.php?qid=".$qid."'>See more</a></div>
+            </div>
+            </td>
+        </table>
+        </div>
+        "; 
     } 
 
     // MY ANSWERS
-    echo "<h2>My Answers:</h2>";
+    echo "</br></br><h4>Answers:</h4>";
 
     // Get answers data
     $query = "SELECT questions.title as q, answers.body as a, qdate
@@ -81,11 +103,25 @@ if (isset($_SESSION["uid"])) {
     // Print answers data
     foreach($result as $row) {
         extract($row);
-        echo "<item>
-        <h4>$q</h4>
-        <description>$a</description>
-        <p>$qdate</p>
-        </item>"; 
+        echo "
+        <div>
+        <table class='table table-hover'>
+            <td>
+            <strong>
+                $q
+            </strong>
+            </br></br>
+            <blockquote>
+                $a
+            </blockquote>
+
+            <div class='d-flex mt-1 justify-content-end'>
+                <p style='font-weight:bold;'>$qdate</p> 
+                <div class='pl-5'><a href='question.php?qid=".$qid."'>See more</a></div>
+            </div>
+            </td>
+        </table>
+        </div>";
     }
 
 } else {
@@ -95,3 +131,7 @@ if (isset($_SESSION["uid"])) {
 }
 CloseCon($con);
 ?>
+
+</div>
+</body>
+</html>

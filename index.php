@@ -17,7 +17,7 @@ $url = isset($_SERVER['PATH_INFO']) ? explode('/', ltrim($_SERVER['PATH_INFO'], 
 
 if (isset($_SESSION['uid'])) {
   // Redirect user to welcome page
-  header("location: profile.php");
+  header("location: browse.php");
 } else {
   header("location: login.php");
 }

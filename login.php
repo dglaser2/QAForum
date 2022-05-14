@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body{ font: 14px sans-serif; }
-        .wrapper{ width: 360px; padding: 20px; }
+        .wrapper{ width: 360px; padding: 40px; }
     </style>
 </head>
 <body>
@@ -48,16 +48,15 @@
 <?php
 // Initialize session
 
-// Check if user is already logged in. If so, take to profile page
-// if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
-//     header("location: profile.php");
-//     exit;
-// }
-
 $con = OpenCon();
 
 $username = $password = "";
 $username_err = $password_err = $login_err = "";
+
+// Check if user is already logged in. If so, take to profile page
+if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
+    header("location: browse.php");
+}
 
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -105,7 +104,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                             $_SESSION["username"] = $username;                           
                             
                             // Redirect user to welcome page
-                            header("location: profile.php");
+                            header("location: browse.php");
                         } else{
                             // Password is not valid, display a generic error message
                             $login_err = "Invalid username or password.";
