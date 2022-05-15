@@ -33,23 +33,14 @@ unset($_POST);
         //     echo '<div class="alert alert-danger">' . $post_err . '</div>';
         // }        
         ?>
+        <br>
+        <br>
+        <br>
 
+        <div>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             </br> </br></br>
-            <div class="form-group">
-                <label>Title</label>
-                <input type="text" name="title" class="form-control" placeholder="What's the shpiel?" required>
-                <span class="invalid-feedback"><?php echo $post_err; ?></span>
-            </div>
-            <div class="form-outline">
-                <label class="form-label">Body</label>
-                <textarea class="form-control" name="body" rows="10" height="80" placeholder="Be specific..."></textarea>
-            </div>
-            </br>
-            <!-- TOPIC DROPDOWN HERE -->
-            <form method="post" id="top">
-                <!-- <label for="topicForm">Browse by Topic:</label> -->
-                <select class="form-control" name="top" id="select">
+            <select class="form-control" name="top" id="select">
                     <option selected value="">All Topics</option>
                     <option value="1">Holidays</option>
                     <option value="2">&nbsp;&nbsp;Passover</option>
@@ -64,13 +55,22 @@ unset($_POST);
                     <option value="11">&nbsp;&nbsp;Talmud</option>
                     <option value="12">&nbsp;&nbsp;Chumash</option>
                 </select>
-                <input type="submit" class="btn btn-primary">
-            </form></br>
-        </div>
-        <div><?php        if (isset($_POST['top'])) {
-            // header("location: browse.php?top=".$_POST['top']);
-            echo $_POST['top'];
-        }?></div>
+                <br>
+                <br>
+                <br>
+            <div class="form-group">
+                <label>Title</label>
+                <input type="text" name="title" class="form-control" placeholder="What's the shpiel?" required>
+                <span class="invalid-feedback"><?php echo $post_err; ?></span>
+            </div>
+            <div class="form-outline">
+                <label class="form-label">Body</label>
+                <textarea class="form-control" name="body" rows="10" height="80" placeholder="Be specific..."></textarea>
+            </div>
+            </br>
+            <!-- TOPIC DROPDOWN HERE -->
+            <input type="submit" class="btn btn-primary">
+            
 
         </form>
         </form>
@@ -83,21 +83,25 @@ unset($_POST);
 $con = OpenCon();
 if (isset($_SESSION['uid'])) {
     // need to input: uid, title, body, topid, qdate (current date)
-    if (isset($_POST['submit'])) {
-        echo "got it";
-        if (!empty($_POST['top'])) {
-            echo "wow!";
-        }
-    }
+    // if (isset($_POST['submit'])) {
+    //     echo "got it";
+    //     if (!empty($_POST['top'])) {
+    //         echo "wow!";
+    //     }
+    // }
+    // if (isset($_POST['top'])) {
+    //         // header("location: browse.php?top=".$_POST['top']);
+    //         echo $_POST['top'];
+    // }
 
     $uid = $_SESSION['uid'];
     $title = $_REQUEST['title'];
     $body = $_REQUEST['body'];
-    $topid = $_POST['top'];                 // NEED TO INSERT CORRECT TOPIC
+    $topid = $_REQUEST['top'];                 // NEED TO INSERT CORRECT TOPIC
     // $topid = 1;          // NEED TO INSERT CORRECT TOPIC
     $qdate = date("Y-m-d H:i:s");
-    echo $topid;
-    if ($body && $title) {
+    //echo $topid;
+    if ($body && $title && $topid) {
         // echo 'hi';
         $query = "INSERT into Questions (uid, title, body, topid, qdate)
         VALUES ('$uid', '$title', '$body', '$topid', '$qdate')";
