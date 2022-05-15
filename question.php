@@ -33,7 +33,7 @@ if (isset($_SESSION["uid"])) {
     }
 
     // Get question data
-    $query = "SELECT * FROM `Questions` WHERE qid = ? ORDER BY qdate DESC";
+    $query = "SELECT * FROM `Questions` join `Users` using (uid) WHERE qid = ? ORDER BY qdate DESC";
     $stmt = $con->prepare($query);
     $stmt->bind_param("i", $currID);
     $stmt->execute();
@@ -45,7 +45,10 @@ if (isset($_SESSION["uid"])) {
         echo "
         <item>
         <h2>$title</h2>
-        <p>".$qdate."</p></br>
+        <a href=profile.php?u=".$uid.">@".$username."</a><p>".$qdate."</p>
+        
+        </br></br>       
+        </br></br>
         <h4>$body</h4>
         </item>"; 
     } 
@@ -58,9 +61,8 @@ if (isset($_SESSION["uid"])) {
              <textarea class="form-control" name="body" rows="4" height="30" placeholder="Be specific..."></textarea>
             </div>
     </br>
-    <!-- TOPIC DROPDOWN HERE -->
             <div class="form-group">
-                <input type="submit" value="Post" class="btn btn-primary" name="submit" >
+                <input type="submit" class="btn btn-primary">
             </div>
 
 <?php
@@ -101,6 +103,25 @@ if (isset($_SESSION["uid"])) {
             </div>";
     } else {
         echo "No answers yet.";
+    }
+
+    $uid = $_SESSION['uid'];
+    $body = $_REQUEST['body'];
+    $qid = $currID;
+    $adate = date("Y-m-d H:i:s");
+
+    if ($body) {
+        // echo 'hi';
+        $query = "INSERT into Answers (uid, qid, body, adate)
+        VALUES ('$uid', '$qid', '$$body', '$adate')";
+
+        if ($result = $con->query($query)) {
+            echo '<script>console.log("Answer posted!"); </script>';
+            unset($_POST);
+            header("location: browse.php");
+        }  else {
+            echo "Error posting question";
+        }
     }
 
 } else {
