@@ -60,9 +60,13 @@ session_start();
                     <option value="11">&nbsp;&nbsp;Talmud</option>
                     <option value="12">&nbsp;&nbsp;Chumash</option>
                 </select>
-                <input type="submit" name="top" value="Browse">
+                <input type="submit" >
             </form></br>
         </div>
+        <div><?php        if (isset($_POST['top'])) {
+            // header("location: browse.php?top=".$_POST['top']);
+            echo $_POST['top'];
+        }?></div>
 
         <?php
         $con = OpenCon();
@@ -109,10 +113,6 @@ session_start();
     </table>
     </div>
     ";
-        }
-        if (isset($_POST['top'])) {
-            // header("location: browse.php?top=".$_POST['top']);
-            echo $_POST['top'];
         }
 
         CloseCon($con);
