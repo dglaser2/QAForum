@@ -57,7 +57,7 @@ if (isset($_SESSION["uid"])) {
     // Get questions data
     $query = "SELECT * FROM `Questions` WHERE uid = ? ORDER BY qdate DESC";
     $stmt = $con->prepare($query);
-    $stmt->bind_param("i", $_SESSION["uid"]);
+    $stmt->bind_param("i", $currID);
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -88,11 +88,11 @@ if (isset($_SESSION["uid"])) {
         "; 
     } 
 
-    // MY ANSWERS
+    // ANSWERS
     echo "</br></br><h4>Answers:</h4>";
 
     // Get answers data
-    $query = "SELECT questions.title as q, answers.body as a, qdate
+    $query = "SELECT questions.title as q, answers.body as a, qdate, answers.qid as qid
     FROM `Answers` join `Questions` using (qid) 
     WHERE answers.uid = ? ORDER BY adate DESC";
     $stmt = $con->prepare($query);

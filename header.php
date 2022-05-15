@@ -3,6 +3,7 @@
   <div class="container-fluid">
     <a class="navbar-brand" href="browse.php">
         <img src="logo.png" alt="Logo" style="width:50px;" class="rounded-pill">
+        <!-- <label for="exampleFormControlSelect1">Pocket Rabbi</label> -->
     </a>
     <form class="d-flex mt-3 ml-2">
         <input class="form-control me-2" type="text" placeholder="Search">

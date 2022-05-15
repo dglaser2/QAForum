@@ -45,14 +45,25 @@ if (isset($_SESSION["uid"])) {
         echo "
         <item>
         <h2>$title</h2>
-        <p>".$qdate."</p>
+        <p>".$qdate."</p></br>
         <h4>$body</h4>
         </item>"; 
     } 
+?>
 
-    // MY ANSWERS
-    echo "<h2>Answers:</h2>";
+<!-- ANSWERS -->
+</br></br></br><h2>Answers:</h2>
+<div class="form-outline">
+            <label class="form-label">Post an answer</label>
+             <textarea class="form-control" name="body" rows="4" height="30" placeholder="Be specific..."></textarea>
+            </div>
+    </br>
+    <!-- TOPIC DROPDOWN HERE -->
+            <div class="form-group">
+                <input type="submit" value="Post" class="btn btn-primary" name="submit" >
+            </div>
 
+<?php
     // Get answers data
     $query = "SELECT * FROM `Answers` JOIN `Users` using (uid) WHERE qid = ? ORDER BY adate DESC";
     $stmt = $con->prepare($query);
@@ -63,12 +74,31 @@ if (isset($_SESSION["uid"])) {
     // Print answers data
 
     if ($result->num_rows > 0)
-    foreach($result as $row) {
-        extract($row);
-        echo "<item>
-        <b> @" . $username ." - ".$adate."</b>
-        <body>".$body." </body>
-        </item>"; 
+        foreach($result as $row) {
+            extract($row);
+            echo "
+            <div>
+            <table class='table table-hover'>
+                <td>
+                    <div class='d-flex'>
+                        <strong>
+                        <a href='profile.php?u=".$uid."'>@".$username."</a>
+                        </strong>
+                        <button type='button' class='btn btn-success'>Best answer</button>
+                        <button type='button' class='btn btn-light'>Like</button>
+                    </div>
+                    </br>
+                    <blockquote>
+                        $body
+                    </blockquote>
+        
+                    <div class='d-flex mt-1 justify-content-end'>
+                        <p style='font-weight:bold;'>$adate</p> 
+                        <div class='pl-5'></div>
+                    </div>
+                </td>
+            </table>
+            </div>";
     } else {
         echo "No answers yet.";
     }

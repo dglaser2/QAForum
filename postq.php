@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body{ font: 14px sans-serif; }
-        .wrapper{ width: 800px; padding: 20px; }
+        .wrapper{ width: 400px; padding: 20px; }
     </style>
 </head>
 <body>
@@ -38,6 +38,7 @@
              <textarea class="form-control" name="body" rows="10" height="80" placeholder="Be specific..."></textarea>
             </div>
     </br>
+    <!-- TOPIC DROPDOWN HERE -->
             <div class="form-group">
                 <input type="submit" value="Post" class="btn btn-primary" name="submit" >
             </div>
@@ -53,8 +54,8 @@
         // need to input: uid, title, body, topid, qdate (current date)
             
         $uid = $_SESSION['uid'];
-        $title    = $_REQUEST['title'];
-        $body    = $_REQUEST['body'];
+        $title = $_REQUEST['title'];
+        $body = $_REQUEST['body'];
         $qdate = date("Y-m-d H:i:s");
 
         if (isset($_REQUEST['body']) && isset($_REQUEST['title'])) {
@@ -67,8 +68,6 @@
                 echo "Error posting question";
             }
         }
-
-
     } else {
         // Redirect user to welcome page
         header("location: logout.php");
