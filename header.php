@@ -1,3 +1,6 @@
+<?php
+include "dbconnect.php";
+?>
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark navbar-center">
 
   <div class="container-fluid">
@@ -5,10 +8,16 @@
         <img src="logo.png" alt="Logo" style="width:50px;" class="rounded-pill">
         <!-- <label for="exampleFormControlSelect1">Pocket Rabbi</label> -->
     </a>
-    <form class="d-flex mt-3 ml-2">
-        <input class="form-control me-2" type="text" placeholder="Search">
-        <button class="btn btn-primary" type="button">Search</button>
+    <form class="d-flex mt-3 ml-2"  method = "post" action = "browse.php">
+        <input class="form-control me-2" type="text" name = "searchbar" placeholder="Search">
+        <input class="btn btn-primary" type="submit" value = "Search">
       </form>
+      <?php
+        $con = OpenCon();
+        $keyword = $_REQUEST['searchbar'];
+        //echo "hello";
+        CloseCon($con);
+      ?>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
       <span class="navbar-toggler-icon"></span>

@@ -1,6 +1,5 @@
 <?php
 include 'header.php';
-include "dbconnect.php";
 session_start();
 unset($_POST);
 ?>
@@ -82,18 +81,7 @@ unset($_POST);
 <?php
 $con = OpenCon();
 if (isset($_SESSION['uid'])) {
-    // need to input: uid, title, body, topid, qdate (current date)
-    // if (isset($_POST['submit'])) {
-    //     echo "got it";
-    //     if (!empty($_POST['top'])) {
-    //         echo "wow!";
-    //     }
-    // }
-    // if (isset($_POST['top'])) {
-    //         // header("location: browse.php?top=".$_POST['top']);
-    //         echo $_POST['top'];
-    // }
-
+    
     $uid = $_SESSION['uid'];
     $title = $_REQUEST['title'];
     $body = $_REQUEST['body'];

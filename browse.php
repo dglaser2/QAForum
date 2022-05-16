@@ -1,6 +1,5 @@
 <?php
 include 'header.php';
-include "dbconnect.php";
 session_start();
 ?>
 
@@ -63,14 +62,54 @@ session_start();
                 <input type="submit" >
             </form></br>
         </div>
-        <div><?php        if (isset($_POST['top'])) {
-            // header("location: browse.php?top=".$_POST['top']);
-            echo $_POST['top'];
-        }?></div>
+        <div>
 
         <?php
         $con = OpenCon();
+        if($keyword){
+            if($keyword){
+          header("header.php");
+        $query = "SELECT * from Questions JOIN `Users` using(uid)  where 
+          `title` LIKE '%{$keyword}%' or
+	        `body` LIKE '%{$keyword}%'
+          ORDER BY qdate DESC";
+        //echo "so far so good";
+        if ($result = $con->query($query)) {
+            foreach ($result as $row) {
+            extract($row);
+            echo "
+    <div>
+    <table class='table table-hover'>
+        <td>
+        <strong>
+            $title
+        </strong>
+        </br>
+        <a href=profile.php?u=" . $uid . ">@" . $username . "</a>
+        </br></br>
+        <div style='max-width: 1000px;'>
+            $body
+        </div>
 
+        <div class='d-flex mt-1 justify-content-end'>
+            <p style='font-weight:bold;'>$qdate</p> 
+            <div class='pl-5 pr-3'><a href='question.php?qid=" . $qid . "'>See more...</a></div>
+        </div>
+        </td>
+    </table>
+    </div>
+    ";
+        }
+      }
+      if($result->num_rows < 1){ 
+          echo "No results. Sorry :)";
+      }
+            //header("location: browse.php");
+        }  else {
+            echo "Error posting question";
+        }
+        }
+        else{
         // Get questions data
         if (isset($_GET['top'])) {
             $query = "SELECT * FROM `Questions` JOIN `Users` using (uid) WHERE topid=? ORDER BY qdate DESC";
@@ -114,7 +153,7 @@ session_start();
     </div>
     ";
         }
-
+    }
         CloseCon($con);
 
         ?>

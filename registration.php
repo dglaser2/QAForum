@@ -50,15 +50,45 @@ session_start();
                 <span class="invalid-feedback"><?php echo $email_err; ?></span>
             </div>
             <div class="form-group">
-                <label>Username</label>
+                <label>Street Number (Optional)</label>
+                <input type="text" name="streetnum" class="form-control">
+                
+            </div>
+            <div class="form-group">
+                <label>City (Optional)</label>
+                <input type="text" name="city" class="form-control">
+        
+            </div>
+            <div class="form-group">
+                <label>State (Optional)</label>
+                <input type="text" name="state" class="form-control" >
+                
+            </div>
+            <div class="form-group">
+                <label>Zip (Optional)</label>
+                <input type="text" name="zip" class="form-control" >
+   
+            </div>
+            <div class="form-group">
+                <label>Country (Optional)</label>
+                <input type="text" name="country" class="form-control">
+                
+            </div>
+            <div class="form-group">
+                <label>Username </label>
                 <input type="text" name="username" class="form-control" required>
                 <span class="invalid-feedback"><?php echo $username_err; ?></span>
             </div>
             <div class="form-group">
                 <label>Password</label>
                 <input type="password" name="password" class="form-control" required>
-                <span class="invalid-feedback"><?php echo $password_err; ?></span>
+                <span class="invalid-feedback"><?php echo $password_err; ?></span> 
             </div>
+            <div>
+            <textarea class="form-control" name="body" rows="4" height="30" placeholder="Tell Us About Yourself! (Optional)"></textarea>
+            </div>
+             <br>
+             <br>
             <div class="form-group">
                 <input type="submit" name="submit" class="btn btn-primary" value="Register">
             </div>
@@ -124,9 +154,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $username = $_REQUEST['username'];
         $email = $_REQUEST['email'];
         $password = $_REQUEST['password'];
+        if($_REQUEST['streetnum']){
+            $street = $_REQUEST['streetnum'];
+        }
+        else{
+            $street = NULL;
+        }
+        if($_REQUEST['city']){
+            $city = $_REQUEST['city'];
+        }
+        else{
+            $city = NULL;
+        }
+        if($_REQUEST['state']){
+            $state = $_REQUEST['state'];
+        }
+        else{
+            $state = NULL;
+        }
+        if($_REQUEST['zip']){
+            $zip = $_REQUEST['zip'];
+        }
+        else{
+            $zip = NULL;
+        }
+        if($_REQUEST['country']){
+            $country = $_REQUEST['country'];
+        }
+        else{
+            $country = NULL;
+        }
+        if($_REQUEST['body']){
+            $bio = $_REQUEST['body'];
+        }
+        else{
+            $bio = NULL;
+        }
         $user_check_query = "SELECT * FROM Users WHERE username= '$username' OR email= '$email' LIMIT 1";
 
-        if ($result1 = $con->query($user_check_query)) {
+        $result1 = $con->query($user_check_query);
+        if ($result1->num_rows >0) {
             $user = $result1->fetch_assoc();
             if ($user['username'] === $username) {
                 echo "Username already exists. Please try another";
@@ -135,13 +202,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 echo "This email is already registed. Please try logging in
                 or using a different email address.";
             }
+            
         } else {
-        $query = "INSERT into Users (username, email, pw, fname, lname)
-                VALUES (?, ?, ?, ?, ?);";
+        $query = "INSERT into Users (username, email, pw, fname, lname, streetnum, city, state, zip, country, bio)
+                VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
         $stmt = $con->prepare($query);
-        $stmt->bind_param('sssss', $username, $email, $password, $fname, $lname);
+        $stmt->bind_param('sssssssssss', $username, $email, $password, $fname, $lname, $street, $city, $state, $zip, $country, $bio);
         $stmt->execute();
+        // $con->query($query);
 
         session_start();
         // Store data in session variables
@@ -156,6 +225,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 }
+unset($_SERVER);
 }
 //  }
 
