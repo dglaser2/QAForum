@@ -8,7 +8,6 @@ ini_set( 'display_errors', true );
 
 session_start();
 include 'dbconnect.php';
-include 'header.php';
 
 define('DS', DIRECTORY_SEPARATOR);
 define('ROOT', dirname(__FILE__));

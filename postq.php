@@ -40,7 +40,7 @@ unset($_POST);
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             </br> </br></br>
             <select class="form-control" name="top" id="select">
-                    <option selected value="">All Topics</option>
+                    <option selected value="0">All Topics</option>
                     <option value="1">Holidays</option>
                     <option value="2">&nbsp;&nbsp;Passover</option>
                     <option value="3">&nbsp;&nbsp;Yom Kippur</option>

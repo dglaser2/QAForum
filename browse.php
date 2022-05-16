@@ -42,7 +42,7 @@ session_start();
                     <input type="radio" name="options" id="option2"> Oldest
                 </label>
             </div>
-            <form method="post" id="top">
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                 <!-- <label for="topicForm">Browse by Topic:</label> -->
                 <select class="form-control" name="top" id="select">
                     <option selected value="">All Topics</option>

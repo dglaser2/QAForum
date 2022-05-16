@@ -95,8 +95,8 @@ session_start();
 
 
             // VIEW ANSWERS
-            $query = "SELECT answers.aid, answers.uid, users.username, body, count(likes.uid) as lcount
-            FROM `Answers` JOIN `Users` using (uid) left outer JOIN `likes` using (aid)
+            $query = "SELECT answers.aid, answers.uid, users.username, body, count(Likes.uid) as lcount
+            FROM `Answers` JOIN `Users` using (uid) left outer JOIN `Likes` using (aid)
             WHERE qid = ?
             group by answers.aid, users.username, body
             ORDER BY adate DESC";
