@@ -1,5 +1,7 @@
 # QAForum
 
+Site is accessible via *localhost/qaforum*. XAMPP or an equivalent application manager must be installed and dbconnect.php has to be configured with the appropriate relational database schema.
+
 Project #2 (due around May 15)
 In the second part of the project, you need to create a web-based user interface for the database designed in the first project. In particular, the interface should allow users to register and login. They should be able to post questions, select a topic for their posted questions, to provide answers to questions posted by others, and to give ratings to answers provided by others. They should also be able to see a list of the questions they have posted, a list of the answers they have provided, or any new answers that were provided by others to the user’s questions.
 
