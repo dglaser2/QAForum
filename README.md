@@ -2,7 +2,8 @@
 
 Site is accessible via *localhost/qaforum*. XAMPP or an equivalent application manager must be installed and dbconnect.php has to be configured with the appropriate relational database schema.
 
-Project #2 (due around May 15)
+Project #2 Prompt:
+
 In the second part of the project, you need to create a web-based user interface for the database designed in the first project. In particular, the interface should allow users to register and login. They should be able to post questions, select a topic for their posted questions, to provide answers to questions posted by others, and to give ratings to answers provided by others. They should also be able to see a list of the questions they have posted, a list of the answers they have provided, or any new answers that were provided by others to the user’s questions.
 
 Users should also be able to browse and search the site. Browsing should be supported via the multi-level hierarchy, so that a user could click on a topic and maybe get a list of recently posted questions (or questions with new answers) for that topic in reverse chronological order. Searching means that the user could type in a keyword query and get back questions or answers that match the query or score high on the query. You may also consider providing various options to combine browsing and search (say, allowing a keyword search restricted to a particular topic), and in reverse chronological order, and you may want to allow users to choose if results of keyword searches should be questions or answers, or both. It is up to you to decide how to support browsing and search – think about what would be most useful to the user.
